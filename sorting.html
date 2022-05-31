@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sorting by Dates</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      .chartMenu {
+        width: 100vw;
+        height: 40px;
+        background: #1A1A1A;
+        color: rgb(130, 115, 151);
+      }
+      .chartMenu p {
+        padding: 10px;
+        font-size: 20px;
+      }
+      .chartCard {
+        width: 100vw;
+        height: calc(100vh - 40px);
+        background: rgb(77, 76, 125);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chartBox {
+        width: 700px;
+        padding: 20px;
+        border-radius: 20px;
+        border: solid 3px rgb(54, 48, 98,1);
+        background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chartMenu">
+      <p>VigourSoft</p>
+    </div>
+    <div class="chartCard">
+      <div class="chartBox">
+        <canvas id="myChart"></canvas>
+        <input onchange="filterData()" type="date" id="startdate" value="2022-05-24">
+        <input onchange="filterData()" type="date" id="enddate" value="2022-05-30">
+      </div>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+    // setup
+    const dates = ['2022-05-24', '2022-05-25', '2022-05-26', '2022-05-27', '2022-05-28', '2022-05-29', '2022-05-31'];
+    const datapoints = [1000,8700,770,4680,9400,5000,8430];
+    const data = {
+      labels: dates,
+      datasets: [{
+        label: 'Expenditure',
+        data: datapoints,
+        backgroundColor: [
+          'rgba(255, 26, 104, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(0, 0, 0, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 26, 104, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(0, 0, 0, 1)'
+        ],
+        borderWidth: 1
+      }]
+    };
+
+    // config
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    };
+
+    // render init block
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+
+    function filterData() {
+      const dates2 = [...dates];
+      const startdate= document.getElementById('startdate');
+      const enddate= document.getElementById('enddate');
+
+      //getting index of dates
+
+    const indexstartdate= dates2.indexOf(startdate.value);
+    const indexenddate= dates2.indexOf(enddate.value);
+
+    //slice dates
+    const filterDate = dates2.slice(indexstartdate, indexenddate + 1);
+
+
+    //replacing the labels
+    myChart.config.data.labels= filterDate;
+
+    //datapoints
+    const datapoints2 = [...datapoints];
+    const filterDatapoints = datapoints2.slice(indexstartdate, indexenddate + 1);
+    myChart.config.data.datasets[0].data= filterDatapoints;
+    myChart.update();
+    }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time-series</title>
+  <style type="text/css">
+    .chartBox {
+      width: 700px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="chartBox">
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js">
+  </script>
+  <script>
+    const data = {
+      datasets: [{
+        label: 'Income',
+        data: [{
+            x: Date.now(),
+            y: 20
+          },
+          {
+            x: '2022-05-30T13:00:00',
+            y: 20
+          },
+          {
+            x: '2022-05-30T14:20:00',
+            y: 80
+          },
+          {
+            x: '2022-05-30T15:00:00',
+            y: 30
+          },
+          {
+            x: '2022-05-30T18:00:00',
+            y: 90
+          },
+          {
+            x: '2022-05-30T12:00:00',
+            y: 10
+          },
+          {
+            x: '2022-05-30T19:00:00',
+            y: 40
+          }
+
+        ],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    };
+
+
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+        scales: {
+          x: {
+            parsing: false,
+            type: 'time',
+            time: {
+              unit: 'hour',
+            }
+          },
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    };
+
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+
+  </script>
+
+</body>
+
+</html>
